@@ -3,6 +3,14 @@ class TicTacToe
       @moves = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
       @moves_counter = 1
     end
+
+    def moves
+      @moves
+    end
+
+    def moves_counter
+      @moves_counter
+    end
   
     def display_board
       puts " #{@moves[0]} | #{@moves[1]} | #{@moves[2]} "
@@ -12,17 +20,23 @@ class TicTacToe
       puts " #{@moves[6]} | #{@moves[7]} | #{@moves[8]} "
     end
   
-    def play
+    def play(input = nil)
       loop do
         display_board
         player = @moves_counter % 2 == 0 ? "Player 2" : "Player 1"
-        puts "#{player}, please select a square (1-9):"
-        user_input = gets.chomp.to_i - 1
+        if input.nil?
+          puts "#{player}, please select a square (1-9):"
+          user_input = gets.chomp.to_i - 1
+        else
+          user_input = input
+        end
         if user_input.between?(0, 8) && @moves[user_input] == " "
           @moves[user_input] = @moves_counter % 2 == 0 ? "O" : "X"
           @moves_counter += 1
+          
         else
           puts "Invalid move, please try again."
+          break
         end
         break if game_over?
       end
